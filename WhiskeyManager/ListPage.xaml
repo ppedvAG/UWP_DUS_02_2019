@@ -8,7 +8,22 @@
     mc:Ignorable="d"
     Background="Transparent">
 
-    <ListBox Background="Transparent" Margin="10" Name="listboxWhiskeys">
+    <ListBox DoubleTapped="ListboxWhiskeys_DoubleTapped" IsDoubleTapEnabled="True" 
+             
+             Background="Transparent" Margin="10" Name="listboxWhiskeys">
+        <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="local:Whiskey">
+                <Grid HorizontalAlignment="Stretch">
+                    <TextBlock VerticalAlignment="Center" Text="{x:Bind Mode=OneWay}" />
+                    <Button Click="Whiskey_Edit_Click" HorizontalAlignment="Right">Bearbeiten</Button>
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
         
     </ListBox>
 </Page>

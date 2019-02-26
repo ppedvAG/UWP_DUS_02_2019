@@ -22,9 +22,58 @@ namespace WhiskeyManager
     /// </summary>
     public sealed partial class DetailsPage : Page
     {
+        Whiskey _whiskeyToEdit = null;
+
         public DetailsPage()
         {
             this.InitializeComponent();
+            cbTyp.ItemsSource =  Enum.GetValues(typeof(Whiskey.WhiskeyType));
+            cbTyp.SelectedIndex = 0;
+        }
+
+        private void Create_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(_whiskeyToEdit == null)
+            {
+                string name = tbName.Text;
+                bool leer = cbLeer.IsChecked.Value;
+                Whiskey.WhiskeyType type = (Whiskey.WhiskeyType)cbTyp.SelectedItem;
+                int year = dpJahrgang.Date.Year;
+
+                Whiskey newWhiskey = new Whiskey(name, year, leer, type);
+                WhiskeyList.Whiskeys.Add(newWhiskey);
+            }
+            else
+            {
+                _whiskeyToEdit.Name = tbName.Text;
+                _whiskeyToEdit.Leer = cbLeer.IsChecked.Value;
+                _whiskeyToEdit.Type = (Whiskey.WhiskeyType)cbTyp.SelectedItem;
+                _whiskeyToEdit.Jahrgang = dpJahrgang.Date.Year;
+            }
+
+
+            this.Frame.GoBack();
+        }
+
+        private void Abort_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.GoBack();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(e.Parameter is Whiskey whiskey)
+            {
+                _whiskeyToEdit = whiskey;
+
+                tbName.Text = whiskey.Name;
+                cbLeer.IsChecked = whiskey.Leer;
+                cbTyp.SelectedItem = whiskey.Type;
+                dpJahrgang.Date = new DateTime(whiskey.Jahrgang,1,1);
+
+                btnErstellen.Content = "Speichern";
+            }
+            base.OnNavigatedTo(e);
         }
     }
 }

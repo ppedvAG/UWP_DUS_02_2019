@@ -66,5 +66,11 @@ namespace WhiskeyManager
             Type = type;
         }
 
+        public override string ToString()
+        {
+            string leerString = Leer ? "Leerer" : "Voller";
+            return $"{leerString} {Name} ({Jahrgang}), ein {Type}";
+        }
+
     }
 }

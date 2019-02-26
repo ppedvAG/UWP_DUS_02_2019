@@ -27,5 +27,17 @@ namespace WhiskeyManager
             this.InitializeComponent();
             listboxWhiskeys.ItemsSource = WhiskeyList.Whiskeys;
         }
+
+        private void Whiskey_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button button && button.DataContext is Whiskey whiskey)
+
+            this.Frame.Navigate(typeof(DetailsPage), whiskey);
+        }
+
+        private void ListboxWhiskeys_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(DetailsPage), listboxWhiskeys.SelectedItem);
+        }
     }
 }

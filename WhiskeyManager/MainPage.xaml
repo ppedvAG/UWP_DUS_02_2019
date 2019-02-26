@@ -41,13 +41,22 @@
         </Grid>
         
         <StackPanel Orientation="Vertical" Grid.Row="1" Background="Aqua">
-            <Button AccessKey="Alt+F" HorizontalAlignment="Stretch" Margin="10,10,10,10">Liste</Button>
-            <Button HorizontalAlignment="Stretch" Margin="10,0,10,10">Neuer Whiskey</Button>
-            <Button HorizontalAlignment="Stretch" Margin="10,0,10,10">Reinigung</Button>
+            <Button Click="Liste_Button_Click" AccessKey="Alt+F" HorizontalAlignment="Stretch" Margin="10,10,10,10">Liste</Button>
+            <Button Click="New_Whiskey_Click" HorizontalAlignment="Stretch" Margin="10,0,10,10">Neuer Whiskey</Button>
+            <Button Click="Cleanin_Button_Click" HorizontalAlignment="Stretch" Margin="10,0,10,10">Reinigung</Button>
             <Button HorizontalAlignment="Stretch" Margin="10,0,10,10">Beenden</Button>
         </StackPanel>
 
         <Frame Name="subFrame" Grid.Row="1" Grid.Column="1" Background="Yellow" />
 
+        <Grid 
+            Name="cleaningGrid"
+            Visibility="Collapsed"
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="3" Grid.ColumnSpan="2">
+            <Grid.Background>
+                <SolidColorBrush Color="Red" Opacity="0.3" />
+            </Grid.Background>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Verbleibende Zeit: <Run x:Name="tbVerbleibend" /> Sekunden</TextBlock>
+        </Grid>
     </Grid>
 </Page>
