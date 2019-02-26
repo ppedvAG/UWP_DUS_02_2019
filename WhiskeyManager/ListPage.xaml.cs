@@ -25,6 +25,7 @@ namespace WhiskeyManager
         public ListPage()
         {
             this.InitializeComponent();
+            listboxWhiskeys.ItemsSource = WhiskeyList.Whiskeys;
         }
     }
 }

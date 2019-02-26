@@ -41,7 +41,7 @@
         </Grid>
         
         <StackPanel Orientation="Vertical" Grid.Row="1" Background="Aqua">
-            <Button HorizontalAlignment="Stretch" Margin="10,10,10,10">Liste</Button>
+            <Button AccessKey="Alt+F" HorizontalAlignment="Stretch" Margin="10,10,10,10">Liste</Button>
             <Button HorizontalAlignment="Stretch" Margin="10,0,10,10">Neuer Whiskey</Button>
             <Button HorizontalAlignment="Stretch" Margin="10,0,10,10">Reinigung</Button>
             <Button HorizontalAlignment="Stretch" Margin="10,0,10,10">Beenden</Button>

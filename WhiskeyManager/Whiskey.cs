@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WhiskeyManager
 {
-    class Whiskey : INotifyPropertyChanged
+    public class Whiskey : INotifyPropertyChanged
     {
-        public enum WhiskeyType { SingleMalt, DoubleMalt, TripleMalt }
+        public enum WhiskeyType { Scotch, Bourbon, Irish }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -56,6 +56,14 @@ namespace WhiskeyManager
                 _type = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Type)));
             }
+        }
+
+        public Whiskey(string name, int jahrgang, bool leer, WhiskeyType type)
+        {
+            Name = name;
+            Jahrgang = jahrgang;
+            Leer = leer;
+            Type = type;
         }
 
     }
