@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="Binding.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Binding"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <d:Page.DataContext>
+        <x:String>Test</x:String>
+    </d:Page.DataContext>
+    <StackPanel VerticalAlignment="Center" Margin="20">
+        <!--Binding Source-->
+        <Slider HorizontalAlignment="Stretch" Name="slider" Minimum="0" Maximum="220" StepFrequency="1" TickFrequency="10" SnapsTo="StepValues" />
+        <!--Binding Target-->
+        <!--{} : Markup-Extension-->
+        <TextBox KeyUp="Textbox_KeyUp" Text="{Binding ElementName=slider,Path=Value,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+        <!--2. Binding Target-->
+        <TextBox KeyUp="Textbox_KeyUp" Text="{Binding Converter={StaticResource multiplier},ElementName=slider,Path=Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+        <!--<TextBox>
+            <TextBox.Text>
+                <Binding Mode="TwoWay" Path="Value" ElementName="slider" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.Converter>
+                        <local:MultiplyDoubleConverter />
+                    </Binding.Converter>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>-->
+        <ListBox ItemsSource="{Binding}" />
+        <TextBlock Margin="20">x:Bind</TextBlock>
+        <ListBox Name="listbox" ItemsSource="{x:Bind andereWoerter,Mode=OneWay}" />
+        <TextBlock Text="{x:Bind andereWoerter.Length}" />
+    </StackPanel>
+</Page>

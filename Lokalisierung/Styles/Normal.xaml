@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Lokalisierung">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Global.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <Style TargetType="FrameworkElement" x:Key="frameworkElement">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10" />
+    </Style>
+    
+    <Style TargetType="Button" BasedOn="{StaticResource frameworkElement}" x:Key="normalButton">
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+    </Style>
+
+    <Style TargetType="Button" BasedOn="{StaticResource normalButton}" />
+
+
+    <Style TargetType="Button" BasedOn="{StaticResource normalButton}" x:Key="specialButton">
+        <Setter Property="FontSize" Value="{StaticResource specialFontSize}" />
+    </Style>
+
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource frameworkElement}">
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+    </Style>
+
+    <Style TargetType="CheckBox" BasedOn="{StaticResource frameworkElement}">
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+    </Style>
+    
+</ResourceDictionary>

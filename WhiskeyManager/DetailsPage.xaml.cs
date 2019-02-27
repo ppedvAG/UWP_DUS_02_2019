@@ -71,7 +71,7 @@ namespace WhiskeyManager
                 cbTyp.SelectedItem = whiskey.Type;
                 dpJahrgang.Date = new DateTime(whiskey.Jahrgang,1,1);
 
-                btnErstellen.Content = "Speichern";
+                btnErstellen.Content = "Speichernajsidjasijdias";
             }
             base.OnNavigatedTo(e);
         }

@@ -24,6 +24,8 @@ namespace WhiskeyManager
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        int _clicks = 0;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -32,6 +34,15 @@ namespace WhiskeyManager
 
             subFrame.Navigate<ListPage>();
             subFrame.Navigated += SubFrame_Navigated;
+            
+            this.AddHandler(UIElement.PointerReleasedEvent, new PointerEventHandler(Page_PointerReleased), true);
+        }
+
+        private void Page_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            //Klicks zählen
+            _clicks++;
+            tbClicks.Text = _clicks.ToString();
         }
 
         private void SubFrame_Navigated(object sender, NavigationEventArgs e)
@@ -85,6 +96,11 @@ namespace WhiskeyManager
         private void Liste_Button_Click(object sender, RoutedEventArgs e)
         {
             subFrame.Navigate<ListPage>();
+        }
+
+        private void Exit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }
