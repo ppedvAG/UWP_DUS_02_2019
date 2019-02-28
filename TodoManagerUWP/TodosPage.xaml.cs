@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TodoManagerUWP.Helper;
-using TodoModels.MVVMHelper;
+using TodoModels.Models;
 using TodoModels.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -16,23 +16,29 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace TodoManagerUWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class TodosPage : Page
     {
-        public MainViewModel ViewModel { get; set; }
+        public TodosViewModel ViewModel { get; set; }
 
-        public MainPage()
+        public TodosPage()
         {
             this.InitializeComponent();
-            //Registrierung des NavigationServices
-            GUIServices.NavigationService = new NavigationService { MainFrame = mainFrame };
-            ViewModel = new MainViewModel();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(e.Parameter is TodosViewModel model)
+            {
+                ViewModel = model;
+            }
+            base.OnNavigatedTo(e);
         }
     }
 }

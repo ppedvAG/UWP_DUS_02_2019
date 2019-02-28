@@ -5,10 +5,34 @@
     xmlns:local="using:TodoManagerUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:Windows10FallCreatorsUpdate="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 5)"
+    xmlns:Windows10FallCreatorsUpdateNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract, 5)"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <Grid>
+        <Windows10FallCreatorsUpdate:NavigationView>
+            <Windows10FallCreatorsUpdate:NavigationView.MenuItems>
+                <Windows10FallCreatorsUpdate:NavigationViewItem Name="todo" Content="TodoListe" Icon="List" />
+                <Windows10FallCreatorsUpdate:NavigationViewItem Name="export" Content="Export" Icon="Share" />
+            </Windows10FallCreatorsUpdate:NavigationView.MenuItems>
 
+            <Frame Name="mainFrame"  />
+        </Windows10FallCreatorsUpdate:NavigationView>
+
+        <Windows10FallCreatorsUpdateNotPresent:SplitView>
+
+        </Windows10FallCreatorsUpdateNotPresent:SplitView>
+
+        <interactivity:Interaction.Behaviors>
+            <core:EventTriggerBehavior EventName="Tapped" SourceObject="{Binding ElementName=todo}" >
+                <core:InvokeCommandAction Command="{x:Bind ViewModel.GoToTodosCommand}" />
+            </core:EventTriggerBehavior>
+            <core:EventTriggerBehavior EventName="Tapped" SourceObject="{Binding ElementName=export}" >
+                <core:InvokeCommandAction Command="{x:Bind ViewModel.GotoExportCommand}" />
+            </core:EventTriggerBehavior>
+        </interactivity:Interaction.Behaviors>
     </Grid>
 </Page>
