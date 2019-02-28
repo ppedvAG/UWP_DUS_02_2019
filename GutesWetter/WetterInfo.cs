@@ -17,8 +17,11 @@ namespace GutesWetter
             get { return _name; }
             set
             {
-                _name = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                if (_name != value)
+                {
+                    _name = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                }
             }
         }
 
@@ -55,10 +58,24 @@ namespace GutesWetter
             }
         }
 
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMessage)));
+            }
+        }
+
+
+
         public WetterInfo(string name, double temperature = 0, string iconUrl = " ")
         {
             Name = name;
             Temperature = temperature;
+            //Fürs x:Bind darf die Url nicht "" oder null sein sonst gibt es eine Exception!
             IconUrl = iconUrl;
         }
     }

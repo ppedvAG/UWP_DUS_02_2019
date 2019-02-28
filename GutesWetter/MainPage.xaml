@@ -26,13 +26,12 @@
 
         <!--Städtenamen-->
         <ListBox ItemsSource="{x:Bind Cities,Mode=OneWay}">
-
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="local:WetterInfo">
                     <Border BorderBrush="Black" BorderThickness="2" Padding="5">
                         <Grid>
                             <!--TODO: Fall Creators Update kennt kein UpdateSourceTrigger für x:Bind-->
-                            <TextBox HorizontalAlignment="Stretch" Text="{x:Bind Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
+                            <TextBox Text="{x:Bind Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
                             <Button Click="Delete_City_Click" HorizontalAlignment="Right">Löschen</Button>
                         </Grid>
                     </Border>
@@ -43,10 +42,7 @@
         <ListBox ItemsSource="{x:Bind Cities,Mode=OneWay}" Grid.Column="1">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="local:WetterInfo">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Height="50" Source="{x:Bind IconUrl,Mode=OneWay}" />
-                        <TextBlock>Temperatur: <Run Text="{x:Bind Temperature,Mode=OneWay}" />°</TextBlock>
-                    </StackPanel>
+                    <local:WetterPresenter WetterInfo="{x:Bind Mode=OneWay}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

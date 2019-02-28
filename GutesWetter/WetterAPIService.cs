@@ -14,18 +14,22 @@ namespace GutesWetter
         {
             try
             {
+                info.IsLoaded = false;
                 HttpClient client = new HttpClient();
                 string json = await client.GetStringAsync($"https://api.openweathermap.org/data/2.5/weather?q={info.Name}&units=metric&appid=84d84c7b399d88e7f4e4688facc2498e");
                 info.IsLoaded = true;
                 WetterApiResult result = JsonConvert.DeserializeObject<WetterApiResult>(json);
-
                 info.Temperature = Math.Round(result.main.temp,2);
-                info.IconUrl = $"http://openweathermap.org/img/w/{result.weather[0].icon}.png";
-                info.IsLoaded = true;
+                info.IconUrl = $"https://openweathermap.org/img/w/{result.weather[0].icon}.png";
+                info.ErrorMessage = string.Empty;
             }
             catch (Exception exp)
             {
-
+                info.ErrorMessage = exp.Message;
+            }
+            finally
+            {
+                info.IsLoaded = true;
             }
         }
     }
