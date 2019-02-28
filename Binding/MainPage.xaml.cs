@@ -29,8 +29,9 @@ namespace Binding
         }
 
         List<string> woerter { get; set; } = new List<string>() { "Wort1", "Wort2", "Wort3" };
-        //List<string> andereWoerter = new List<string>() { "Wort1", "Wort2", "Wort3" };
-        string[] andereWoerter = new string[] { "Wort1", "Wort2", "Wort3" };
+
+        //innerhalb einer Page darf mit x:Bind nicht auf ein Array gebunden werden!
+        List<string> andereWoerter = new List<string>() { "Wort1", "Wort2", "Wort3" };
 
         private void Textbox_KeyUp(object sender, KeyRoutedEventArgs e)
         {

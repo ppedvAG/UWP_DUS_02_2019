@@ -26,17 +26,12 @@
 
         <!--Städtenamen-->
         <ListBox ItemsSource="{x:Bind Cities,Mode=OneWay}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            
+
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="local:WetterInfo">
                     <Border BorderBrush="Black" BorderThickness="2" Padding="5">
                         <Grid>
-                            <!--TODO: Fall Creators Update kennt kein UpdateSourceTrigger für x:Bind--> 
+                            <!--TODO: Fall Creators Update kennt kein UpdateSourceTrigger für x:Bind-->
                             <TextBox HorizontalAlignment="Stretch" Text="{x:Bind Name,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" />
                             <Button Click="Delete_City_Click" HorizontalAlignment="Right">Löschen</Button>
                         </Grid>
@@ -60,5 +55,7 @@
             <TextBox Name="textbox" Width="200" />
             <Button Click="Add_City_Button_Click" RelativePanel.RightOf="textbox" Margin="20 0 0 0">Hinzufügen</Button>
         </RelativePanel>
+        
+        
     </Grid>
 </Page>

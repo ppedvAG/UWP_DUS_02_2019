@@ -55,7 +55,7 @@ namespace GutesWetter
             }
         }
 
-        public WetterInfo(string name, double temperature = 0, string iconUrl = "")
+        public WetterInfo(string name, double temperature = 0, string iconUrl = " ")
         {
             Name = name;
             Temperature = temperature;

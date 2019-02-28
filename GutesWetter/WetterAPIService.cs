@@ -16,6 +16,7 @@ namespace GutesWetter
             {
                 HttpClient client = new HttpClient();
                 string json = await client.GetStringAsync($"https://api.openweathermap.org/data/2.5/weather?q={info.Name}&units=metric&appid=84d84c7b399d88e7f4e4688facc2498e");
+                info.IsLoaded = true;
                 WetterApiResult result = JsonConvert.DeserializeObject<WetterApiResult>(json);
 
                 info.Temperature = Math.Round(result.main.temp,2);
@@ -24,7 +25,7 @@ namespace GutesWetter
             }
             catch (Exception exp)
             {
-                
+
             }
         }
     }

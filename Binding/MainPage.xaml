@@ -30,6 +30,6 @@
         <ListBox ItemsSource="{Binding}" />
         <TextBlock Margin="20">x:Bind</TextBlock>
         <ListBox Name="listbox" ItemsSource="{x:Bind andereWoerter,Mode=OneWay}" />
-        <TextBlock Text="{x:Bind andereWoerter.Length}" />
+        <TextBlock Text="{x:Bind andereWoerter.Count}" />
     </StackPanel>
 </Page>
