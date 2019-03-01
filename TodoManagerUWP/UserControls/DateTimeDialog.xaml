@@ -12,8 +12,7 @@
     CloseButtonText="Abbrechen"
     
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"    
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
-    >
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <StackPanel>
         <CalendarDatePicker Name="calenderPicker" />

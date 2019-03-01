@@ -2,6 +2,9 @@
     x:Class="TodoManagerUWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:TodoManagerUWP">
-
+    xmlns:local="using:TodoManagerUWP"
+    xmlns:helper="using:TodoManagerUWP.Helper">
+    <Application.Resources>
+        <helper:ShortDateConverter x:Key="shortDateConv" />
+    </Application.Resources>
 </Application>

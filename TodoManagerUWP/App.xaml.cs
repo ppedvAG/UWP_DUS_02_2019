@@ -73,6 +73,11 @@ namespace TodoManagerUWP
             }
         }
 
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+        }
+
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>

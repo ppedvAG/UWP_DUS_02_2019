@@ -8,6 +8,7 @@ namespace TodoModels.MVVMHelper
     public class GUIServices
     {
         public static INavigationService NavigationService { get; set; }
+        public static INotificationService NotificationService { get; set; }
 
     }
 }

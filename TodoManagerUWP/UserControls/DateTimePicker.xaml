@@ -9,8 +9,10 @@
     HorizontalAlignment="Stretch"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid>
-        <TextBlock Text="{x:Bind SelectedDate,Mode=OneWay}" />
+    <StackPanel Orientation="Horizontal">
+        <Border BorderBrush="Black" BorderThickness="1" Padding="5">
+            <TextBlock Text="{x:Bind SelectedDate,Mode=OneWay,Converter={StaticResource shortDateConv},TargetNullValue=Nicht gesetzt}" />
+        </Border>
         <Button Click="Button_Click">Ändern</Button>
-    </Grid>
+    </StackPanel>
 </UserControl>

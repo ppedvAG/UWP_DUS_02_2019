@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using TodoModels.Models;
 using TodoModels.MVVMHelper;
 
@@ -26,14 +27,51 @@ namespace TodoModels.ViewModels
         {
             TodoItems = todoItems;
             CreateNewTodoCommand = new DelegateCommand(_ => CreateNewTodoItem());
+
+            foreach (var item in todoItems)
+            {
+                item.PropertyChanged += Item_PropertyChanged;
+            }
+        }
+
+        private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (sender is TodoItem todo)
+            {
+                if (e.PropertyName == nameof(TodoItem.DueDate))
+                {
+                    if(todo.DueDate == null)
+                    {
+                        //TOOO: Notification entfernen
+                        GUIServices.NotificationService?.RemoveNotification(todo);
+                    }
+                    else
+                    {
+                        if(todo.DueDate > DateTimeOffset.Now && !todo.Done)
+                        {
+                            GUIServices.NotificationService?.AddNotification(todo);
+                        }
+                    }
+                }
+                else if(e.PropertyName == nameof(TodoItem.Done))
+                {
+                    if(todo.Done == true)
+                    {
+                        GUIServices.NotificationService?.RemoveNotification(todo);
+                        todo.DueDate = DateTime.Now;
+                    }
+                }
+            }
         }
 
         public void CreateNewTodoItem()
         {
             TodoItem newTodo = new TodoItem("Todo ohne Titel", "...");
             TodoItems.Add(newTodo);
+
+            newTodo.PropertyChanged += Item_PropertyChanged;
+
             SelectedTodoItem = newTodo;
         }
-       
     }
 }

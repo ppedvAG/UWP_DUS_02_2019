@@ -40,19 +40,15 @@ namespace TodoManagerUWP.UserControls
             
             DateTimeDialog dialog = new DateTimeDialog(SelectedDate);
             var result = await dialog.ShowAsync();
+            //Wenn der Dialog über Speichern oder Löschen geschlossen wurde,
+            //aktualisiere das gebundene Datum
             switch (result)
             {
-                case ContentDialogResult.None:
-                    break;
                 case ContentDialogResult.Primary:
-                    break;
                 case ContentDialogResult.Secondary:
-                    break;
-                default:
-                    break;
+                    SelectedDate = dialog.CurrentDate;
+                    break; 
             }
-            SelectedDate = dialog.CurrentDate;
-
         }
     }
 }
