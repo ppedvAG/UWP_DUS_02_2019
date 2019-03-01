@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:models="using:TodoModels.Models"
+    xmlns:usercontrols="using:TodoManagerUWP.UserControls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -16,6 +17,16 @@
                 <TextBlock Text="{x:Bind Title,Mode=OneWay}" />
             </DataTemplate>
         </controls:MasterDetailsView.ItemTemplate>
+        <controls:MasterDetailsView.DetailsTemplate>
+            <DataTemplate x:DataType="models:TodoItem">
+                <StackPanel Margin="10">
+                    <TextBox Margin="0 0 0 5" Text="{x:Bind Title,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  />
+                    <TextBox AcceptsReturn="True" TextWrapping="Wrap" MinHeight="100" MaxHeight="400" Text="{x:Bind Description,Mode=TwoWay,UpdateSourceTrigger=LostFocus}"  />
+                    <CheckBox Content="Erledigt" IsChecked="{x:Bind Done,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <usercontrols:DateTimePicker />
+                </StackPanel>    
+            </DataTemplate>
+        </controls:MasterDetailsView.DetailsTemplate>
         <controls:MasterDetailsView.MasterCommandBar>
             <CommandBar>
                 <AppBarButton Label="Neues Todo anlegen"  Icon="NewFolder" Command="{x:Bind ViewModel.CreateNewTodoCommand,Mode=OneWay}" />

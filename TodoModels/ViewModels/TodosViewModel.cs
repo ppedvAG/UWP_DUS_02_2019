@@ -33,6 +33,7 @@ namespace TodoModels.ViewModels
             TodoItem newTodo = new TodoItem("Todo ohne Titel", "...");
             TodoItems.Add(newTodo);
             SelectedTodoItem = newTodo;
-        } 
+        }
+       
     }
 }
