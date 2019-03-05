@@ -6,5 +6,8 @@
     xmlns:helper="using:TodoManagerUWP.Helper">
     <Application.Resources>
         <helper:ShortDateConverter x:Key="shortDateConv" />
+        <Style TargetType="ListBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
     </Application.Resources>
 </Application>

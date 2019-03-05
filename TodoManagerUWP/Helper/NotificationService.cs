@@ -14,13 +14,9 @@ namespace TodoManagerUWP.Helper
     {
         public void AddNotification(TodoItem todoItem)
         {
-            foreach (var item in ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications())
-            {
-                if (item.Id == todoItem.CreationDate.ToString())
-                {
-                    ToastNotificationManager.CreateToastNotifier().RemoveFromSchedule(item);
-                }
-            }
+            //Bisherige Notificationen entfernen
+            RemoveNotification(todoItem);
+
             //Nuget Packacke UWP.ToastNotification
             var content = new ToastContent()
             {
@@ -51,25 +47,36 @@ namespace TodoManagerUWP.Helper
                     Buttons =
                     {
                         // More about Toast Buttons at https://docs.microsoft.com/dotnet/api/microsoft.toolkit.uwp.notifications.toastbutton
-                        new ToastButton("Anzeigen", todoItem.CreationDate.ToString())
+                        new ToastButton("Anzeigen", todoItem.CreationDate.Ticks.ToString())
                         {
                             ActivationType = ToastActivationType.Foreground
                         },
-
                         new ToastButtonDismiss("Abbrechen")
                     }
                 }
             };
 
-
-            ScheduledToastNotification newToast = new ScheduledToastNotification(content.GetXml(),todoItem.DueDate.Value);
-            newToast.Id = todoItem.CreationDate.ToString();
+            ScheduledToastNotification newToast = new ScheduledToastNotification(content.GetXml(), todoItem.DueDate.Value);
+            newToast.Tag = todoItem.CreationDate.Ticks.ToString();
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(newToast);
         }
 
         public void RemoveNotification(TodoItem todoItem)
         {
-            throw new NotImplementedException();
+            foreach (var item in ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications())
+            {
+                
+                if (item.Tag == todoItem.CreationDate.Ticks.ToString())
+                {
+                    ToastNotificationManager.CreateToastNotifier().RemoveFromSchedule(item);
+                }
+            }
+        }
+
+        public void RemoveAllNotifications()
+        {
+            ToastNotificationManager.CreateToastNotifier().GetScheduledToastNotifications().ToList()
+                .ForEach(item => ToastNotificationManager.CreateToastNotifier().RemoveFromSchedule(item));
         }
     }
 }

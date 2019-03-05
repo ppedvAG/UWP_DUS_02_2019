@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TodoModels.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +23,20 @@ namespace TodoManagerUWP
     /// </summary>
     public sealed partial class ExportPage : Page
     {
+        public ExportViewModel ViewModel { get; set; }
+
         public ExportPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(e.Parameter is ExportViewModel model)
+            {
+                ViewModel = model;        
+            }
+            base.OnNavigatedTo(e);
         }
     }
 }

@@ -6,5 +6,6 @@ namespace TodoModels.MVVMHelper
     {
         void AddNotification(TodoItem todoItem);
         void RemoveNotification(TodoItem todoItem);
+        void RemoveAllNotifications();
     }
 }

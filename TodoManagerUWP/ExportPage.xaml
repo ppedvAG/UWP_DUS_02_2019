@@ -5,10 +5,65 @@
     xmlns:local="using:TodoManagerUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
+    Name="page"
+    d:DesignHeight="600"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock TextAlignment="Center" FontSize="20" Margin="0 0 0 10">Mit anderen Nutzern geteilte Listen:</TextBlock>
+            <ListBox Grid.Row="1" ItemsSource="{x:Bind ViewModel.SharedFileNames,Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Grid>
+                            <TextBlock Name="templateTextBlock" HorizontalAlignment="Left" Text="{x:Bind Mode=OneWay}" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button
+                                Command="{Binding ElementName=page,Path=ViewModel.LoadSharedFileCommand,Mode=OneWay}"
+                                CommandParameter="{x:Bind Mode=OneWay}">Laden</Button>
+                                <Button Margin="10 0 0 0"
+                                    Command="{Binding ElementName=page,Path=ViewModel.SaveAsSharedFileCommand,Mode=OneWay}"
+                                    CommandParameter="{x:Bind Mode=OneWay}"
+                                    >Überschreiben</Button>
+                            </StackPanel>
+                            <interactivity:Interaction.Behaviors>
+                                <core:DataTriggerBehavior Binding="{Binding ElementName=page,Path=ViewModel.CurrentFile,Mode=OneWay}" Value="{x:Bind Mode=OneWay}">
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=templateTextBlock}" PropertyName="FontSize" Value="20"  />
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=templateTextBlock}" PropertyName="Foreground" Value="Red"  />
+                                </core:DataTriggerBehavior>
+                                <core:DataTriggerBehavior Binding="{Binding ElementName=page,Path=ViewModel.CurrentFile,Mode=OneWay}" ComparisonCondition="NotEqual" Value="{x:Bind Mode=OneWay}">
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=templateTextBlock}" PropertyName="FontSize" Value="12"  />
+                                    <core:ChangePropertyAction TargetObject="{Binding ElementName=templateTextBlock}" PropertyName="Foreground" Value="Black"  />
+                                </core:DataTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <TextBlock>Aktuelle Liste: <Run Text="{x:Bind ViewModel.CurrentFile,Mode=OneWay,TargetNullValue=Nichts}" /> mit <Run Text="{x:Bind ViewModel.CurrentFileTodoItemsCount,Mode=OneWay}" /> Einträgen</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{x:Bind ViewModel.ChosenFileName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="200" />
+                <Button Margin="10 0 0 0" Command="{x:Bind ViewModel.SaveAsSharedFileCommand,Mode=OneWay}">In geteilten Ordner speichern</Button>
+            </StackPanel>
+            <StackPanel Margin="20" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button  Command="{x:Bind ViewModel.ExportCommand,Mode=OneWay}">Exportieren</Button>
+                <Button  Command="{x:Bind ViewModel.ImportCommand,Mode=OneWay}" Margin="30 0 0 0">Importieren</Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

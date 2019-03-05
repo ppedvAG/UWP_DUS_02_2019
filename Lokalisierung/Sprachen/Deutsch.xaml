@@ -4,4 +4,5 @@
     xmlns:local="using:Lokalisierung">
     <x:String x:Key="capital">Hauptstadt</x:String>
     <x:String x:Key="married">Verheiratet</x:String>
+    <x:String x:Key="owner">Besitzer</x:String>
 </ResourceDictionary>

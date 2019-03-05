@@ -8,10 +8,12 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:models="using:TodoModels.Models"
     xmlns:usercontrols="using:TodoManagerUWP.UserControls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <controls:MasterDetailsView ItemsSource="{x:Bind ViewModel.TodoItems,Mode=OneWay}">
+    <controls:MasterDetailsView ItemsSource="{x:Bind ViewModel.TodoItems,Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedTodoItem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
         <controls:MasterDetailsView.ItemTemplate>
             <DataTemplate x:DataType="models:TodoItem">
                 <TextBlock Text="{x:Bind Title,Mode=OneWay}" />
@@ -25,7 +27,7 @@
                     <CheckBox Content="Erledigt" IsChecked="{x:Bind Done,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <StackPanel Orientation="Vertical">
                         <TextBlock>Erinnerung am:</TextBlock>
-                        <usercontrols:DateTimePicker />
+                        <usercontrols:DateTimePicker SelectedDate="{x:Bind DueDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </StackPanel>
             </DataTemplate>
@@ -33,6 +35,7 @@
         <controls:MasterDetailsView.MasterCommandBar>
             <CommandBar>
                 <AppBarButton Label="Neues Todo anlegen"  Icon="NewFolder" Command="{x:Bind ViewModel.CreateNewTodoCommand,Mode=OneWay}" />
+                <AppBarButton Label="Alle Todos und Erinnerungen löschen"  Icon="Delete" Command="{x:Bind ViewModel.DeleteAllCommand,Mode=OneWay}" />
             </CommandBar>
         </controls:MasterDetailsView.MasterCommandBar>
     </controls:MasterDetailsView>

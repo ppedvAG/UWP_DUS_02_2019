@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using TodoManagerUWP.Helper;
-using TodoModels.Models;
-using TodoModels.MVVMHelper;
-using TodoModels.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -19,7 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace TodoManagerUWP
+namespace SideLoadingTestApp
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -43,17 +39,6 @@ namespace TodoManagerUWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            PrepareLaunch(e);
-        }
-
-        public async void PrepareLaunch(LaunchActivatedEventArgs e = null)
-        {
-            GUIServices.NotificationService = GUIServices.NotificationService ?? new NotificationService();
-            GUIServices.MessageService = GUIServices.MessageService ?? new MessageService();
-            GUIServices.StorageService = GUIServices.StorageService ?? new StorageService();
-
-            await TodoListManager.LoadTodoItems();
-
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -65,7 +50,7 @@ namespace TodoManagerUWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e != null && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
@@ -74,46 +59,18 @@ namespace TodoManagerUWP
                 Window.Current.Content = rootFrame;
             }
 
-            if (e == null || e.PrelaunchActivated == false)
+            if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
                 {
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), e?.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
-        }
-
-        protected async override void OnActivated(IActivatedEventArgs args)
-        {
-            //if(args is ShareTargetActivatedEventArgs targs)
-            if(args is ToastNotificationActivatedEventArgs targs)
-            {
-                GUIServices.NotificationService = GUIServices.NotificationService ?? new NotificationService();
-                GUIServices.MessageService = GUIServices.MessageService ?? new MessageService();
-                GUIServices.StorageService = GUIServices.StorageService ?? new StorageService();
-
-                await TodoListManager.LoadTodoItems();
-
-                PrepareLaunch();
-
-
-                string creationDate = targs.Argument;
-                TodoItem todoItem = TodoListManager.TodoItems.SingleOrDefault(t => t.CreationDate.Ticks.ToString() == creationDate);
-                if(todoItem != null)
-                {
-                    GUIServices.NavigationService.GoToView(Views.Todos, new TodosViewModel(TodoListManager.TodoItems,todoItem));
-                }
-                else
-                {
-                    GUIServices.MessageService.ShowMessage($"Das TodoItem befindet sich nicht mehr in der Liste");
-                }
-            }
-            base.OnActivated(args);
         }
 
         /// <summary>

@@ -40,10 +40,11 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Background="Aqua">
-            <Button Click="Liste_Button_Click" AccessKey="Alt+F" HorizontalAlignment="Stretch" Margin="10,10,10,10">Liste</Button>
-            <Button Click="New_Whiskey_Click" HorizontalAlignment="Stretch" Margin="10,0,10,10">Neuer Whiskey</Button>
-            <Button Click="Cleanin_Button_Click" HorizontalAlignment="Stretch" Margin="10,0,10,10">Reinigung</Button>
-            <Button Click="Exit_Button_Click" HorizontalAlignment="Stretch" Margin="10,0,10,10">Beenden</Button>
+            <!--Auf die Buttons kann auch mittels Alt-Taste und AccessKey zugegriffen werden. -->
+            <Button Click="Liste_Button_Click" AccessKey="L" HorizontalAlignment="Stretch" Margin="10,10,10,10">Liste</Button>
+            <Button Click="New_Whiskey_Click"  AccessKey="N" HorizontalAlignment="Stretch" Margin="10,0,10,10">Neuer Whiskey</Button>
+            <Button Click="Cleanin_Button_Click" AccessKey="C" HorizontalAlignment="Stretch" Margin="10,0,10,10">Reinigung</Button>
+            <Button Click="Exit_Button_Click" AccessKey="E" HorizontalAlignment="Stretch" Margin="10,0,10,10">Beenden</Button>
         </StackPanel>
 
         <Frame Name="subFrame" Grid.Row="1" Grid.Column="1" Background="Yellow" />

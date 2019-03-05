@@ -61,6 +61,8 @@ namespace Lokalisierung
                     return;
 
                 dictionary.Source = new Uri($"ms-appx:///Styles/{filename}");
+                //Zuwesisung wiederholen, damit Styles ausgetauscht werden
+                dictionary.Source = new Uri($"ms-appx:///Styles/{filename}");
                 this.Frame.Navigate(typeof(MainPage));
             }
         }

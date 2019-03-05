@@ -33,6 +33,9 @@
             <core:EventTriggerBehavior EventName="Tapped" SourceObject="{Binding ElementName=export}" >
                 <core:InvokeCommandAction Command="{x:Bind ViewModel.GotoExportCommand}" />
             </core:EventTriggerBehavior>
+            <core:EventTriggerBehavior EventName="Navigated" SourceObject="{Binding ElementName=mainFrame}">
+                <core:InvokeCommandAction Command="{x:Bind ViewModel.SaveTodosCommand}" />
+            </core:EventTriggerBehavior>
         </interactivity:Interaction.Behaviors>
     </Grid>
 </Page>

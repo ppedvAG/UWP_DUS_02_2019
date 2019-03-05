@@ -9,6 +9,7 @@ namespace TodoModels.MVVMHelper
     {
         public static INavigationService NavigationService { get; set; }
         public static INotificationService NotificationService { get; set; }
-
+        public static IStorageService StorageService { get; set; }
+        public static IMessageService MessageService { get; set; }
     }
 }

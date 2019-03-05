@@ -29,5 +29,6 @@
         </Button>
         <TextBlock Text="{StaticResource capital}" />
         <CheckBox Content="{StaticResource married}" />
+        <TextBlock><Run Text="{StaticResource owner}" /> (Noch nicht auf Englisch lokalisiert)</TextBlock>
     </StackPanel>
 </Page>
