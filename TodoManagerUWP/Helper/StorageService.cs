@@ -127,7 +127,7 @@ namespace TodoManagerUWP.Helper
             try
             {
                 FileSavePicker picker = new FileSavePicker();
-                picker.FileTypeChoices.Add("JSON Datei", new List<string>() { ".json" });
+                picker.FileTypeChoices.Add("Todo JSON Datei", new List<string>() { ".todojson" });
                 picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
                 picker.SuggestedFileName = "MyTodos";
                 var file = await picker.PickSaveFileAsync();
@@ -148,7 +148,7 @@ namespace TodoManagerUWP.Helper
             {
                 FileOpenPicker picker = new FileOpenPicker();
                 picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-                picker.FileTypeFilter.Add(".json");
+                picker.FileTypeFilter.Add(".todojson");
                 var file = await picker.PickSingleFileAsync();
                 string json = await FileIO.ReadTextAsync(file);
                 var todos = JsonConvert.DeserializeObject<List<TodoItem>>(json);

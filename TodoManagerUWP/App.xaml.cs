@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TodoManagerUWP.Helper;
 using TodoModels.Models;
 using TodoModels.MVVMHelper;
 using TodoModels.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -41,13 +45,22 @@ namespace TodoManagerUWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            PrepareLaunch(e);
+            await PrepareLaunch(e);
         }
 
-        public async void PrepareLaunch(LaunchActivatedEventArgs e = null)
+        bool _appIsRunning = false;
+
+
+        public async Task PrepareLaunch(LaunchActivatedEventArgs e = null)
         {
+
+            if (_appIsRunning)
+                return;
+
+            _appIsRunning = true;
+
             GUIServices.NotificationService = GUIServices.NotificationService ?? new NotificationService();
             GUIServices.MessageService = GUIServices.MessageService ?? new MessageService();
             GUIServices.StorageService = GUIServices.StorageService ?? new StorageService();
@@ -88,25 +101,20 @@ namespace TodoManagerUWP
             }
         }
 
+        //Einstiegspunkt wenn eine Toast-Notification mit OK bestätigt wurde
         protected async override void OnActivated(IActivatedEventArgs args)
         {
             //if(args is ShareTargetActivatedEventArgs targs)
-            if(args is ToastNotificationActivatedEventArgs targs)
+            if (args is ToastNotificationActivatedEventArgs targs)
             {
-                GUIServices.NotificationService = GUIServices.NotificationService ?? new NotificationService();
-                GUIServices.MessageService = GUIServices.MessageService ?? new MessageService();
-                GUIServices.StorageService = GUIServices.StorageService ?? new StorageService();
-
-                await TodoListManager.LoadTodoItems();
-
-                PrepareLaunch();
+                await PrepareLaunch();
 
 
                 string creationDate = targs.Argument;
                 TodoItem todoItem = TodoListManager.TodoItems.SingleOrDefault(t => t.CreationDate.Ticks.ToString() == creationDate);
-                if(todoItem != null)
+                if (todoItem != null)
                 {
-                    GUIServices.NavigationService.GoToView(Views.Todos, new TodosViewModel(TodoListManager.TodoItems,todoItem));
+                    GUIServices.NavigationService.GoToView(Views.Todos, new TodosViewModel(TodoListManager.TodoItems, todoItem));
                 }
                 else
                 {
@@ -114,6 +122,47 @@ namespace TodoManagerUWP
                 }
             }
             base.OnActivated(args);
+        }
+
+        //Einstiegspunkt wenn eine andere App ein Todo-Item in dieser App anlegen möchte
+        protected async override void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
+        {
+            await PrepareLaunch();
+
+            string title = await args.ShareOperation.Data.GetTextAsync();
+            TodoItem newTodo = new TodoItem(title, "...");
+            TodoListManager.TodoItems.Add(newTodo);
+            GUIServices.NavigationService.GoToView(Views.Todos, new TodosViewModel(TodoListManager.TodoItems, newTodo));
+
+            base.OnShareTargetActivated(args);
+        }
+
+        //Einstiegespunkt, wenn die App über eine Json-Datei gestartet wurde
+        protected async override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            await PrepareLaunch();
+
+
+            if (args.Files.Count > 0)
+            {
+                var item = args.Files[0];
+                if (item is StorageFile file)
+                {
+                    try
+                    {
+                        var json = await FileIO.ReadTextAsync(file);
+                        var todos = JsonConvert.DeserializeObject<List<TodoItem>>(json);
+                        TodoListManager.RefreshTodoItems(todos);
+                        GUIServices.NavigationService.GoToView(Views.Todos, new TodosViewModel(TodoListManager.TodoItems));
+                    }
+                    catch (Exception exp)
+                    {
+                        GUIServices.MessageService.ShowMessage(exp.Message);
+                    }
+
+                }
+            }
+            base.OnFileActivated(args);
         }
 
         /// <summary>

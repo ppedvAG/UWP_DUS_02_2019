@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="ShareApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ShareApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Viewbox>
+        <Grid>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock VerticalAlignment="Center">Titel für Todo:</TextBlock>
+                <TextBox Name="tbTitle" VerticalAlignment="Center" Width="300" Margin="10 0 10 0" />
+                <Button Click="Button_Click">Als Todo erzeugen</Button>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Page>
