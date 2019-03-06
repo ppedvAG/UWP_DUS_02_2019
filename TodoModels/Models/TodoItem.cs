@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TodoModels.MVVMHelper;
@@ -43,6 +44,8 @@ namespace TodoModels.Models
             set { SetValue(ref _done, value); }
         }
 
+        
+
         public TodoItem(string title, string description, DateTimeOffset? dueDate = null, bool done = false)
         {
             Title = title;
@@ -50,6 +53,16 @@ namespace TodoModels.Models
             DueDate = dueDate;
             Done = done;
             CreationDate = DateTimeOffset.Now;
+        }
+
+        [JsonConstructor]
+        public TodoItem(string title, string description, DateTimeOffset? dueDate, DateTimeOffset creationDate, bool done)
+        {
+            Title = title;
+            Description = description;
+            DueDate = dueDate;
+            CreationDate = creationDate;
+            Done = done;
         }
     }
 }
