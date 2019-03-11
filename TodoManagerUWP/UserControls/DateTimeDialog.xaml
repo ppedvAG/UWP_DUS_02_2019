@@ -14,8 +14,13 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"    
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <StackPanel>
-        <CalendarDatePicker Name="calenderPicker" />
-        <TimePicker ClockIdentifier="24HourClock" Name="timePicker"  />
-    </StackPanel>
+    <Grid>
+
+        <StackPanel>
+            <CalendarDatePicker Name="calenderPicker" />
+            <TimePicker ClockIdentifier="24HourClock" Name="timePicker"  />
+
+        </StackPanel>
+        <Button VerticalAlignment="Bottom">adsdsad</Button>
+    </Grid>
 </ContentDialog>
