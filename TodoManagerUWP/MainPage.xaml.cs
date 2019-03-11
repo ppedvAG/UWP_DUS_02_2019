@@ -33,6 +33,8 @@ namespace TodoManagerUWP
             //Registrierung des NavigationServices
             GUIServices.NavigationService = new NavigationService { MainFrame = mainFrame };
             ViewModel = new MainViewModel();
+
+            
         }
     }
 }
