@@ -48,6 +48,11 @@ namespace TodoModels.ViewModels
             }
         }
 
+        public TodosViewModel()
+        {
+
+        }
+
         public TodosViewModel(ObservableCollection<TodoItem> todoItems, TodoItem selectedDate) : this(todoItems)
         {
             SelectedTodoItem = selectedDate;

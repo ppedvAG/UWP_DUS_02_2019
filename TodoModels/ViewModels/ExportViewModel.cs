@@ -30,6 +30,14 @@ namespace TodoModels.ViewModels
             }
         }
 
+        private string _currentImportedFile;
+        public string CurrentImportedFile
+        {
+            get { return _currentImportedFile; }
+            set { SetValue(ref _currentImportedFile, value); }
+        }
+
+
         private string _chosenFileName;
         public string ChosenFileName
         {
@@ -42,7 +50,7 @@ namespace TodoModels.ViewModels
         }
 
 
-        public int CurrentFileTodoItemsCount => TodoListManager.TodoItems.Count;
+        public int CurrentFileTodoItemsCount => TodoListManager.TodoItems?.Count ?? 0;
 
         public ExportViewModel()
         {
@@ -60,13 +68,15 @@ namespace TodoModels.ViewModels
             ExportCommand = new DelegateCommand(p => ExportTodoItems(), p => CurrentFileTodoItemsCount > 0);
             ImportCommand = new DelegateCommand(p => ImportTodos());
 
-            PrepareFileNameList();
+            if(GUIServices.StorageService != null)
+                PrepareFileNameList();
         }
 
         public async void PrepareFileNameList()
         {
             SharedFileNames = new ObservableCollection<string>(await GUIServices.StorageService.GetSharedFileNames());
             CurrentFile = await GUIServices.StorageService.GetLastFileName();
+            CurrentImportedFile = CurrentFile;
         }
 
         public async void LoadSharedFile(string filename)
@@ -96,7 +106,7 @@ namespace TodoModels.ViewModels
 
         public async void ExportTodoItems()
         {
-            var filename = await GUIServices.StorageService.ExportTodoItems(TodoListManager.TodoItems.ToList());
+            CurrentImportedFile = await GUIServices.StorageService.ExportTodoItems(TodoListManager.TodoItems.ToList());
         }
 
         public async void ImportTodos()
@@ -104,6 +114,7 @@ namespace TodoModels.ViewModels
             var todos = await GUIServices.StorageService.ImportTodoItems();
             if (todos.Item1 != null && todos.Item1.Count > 0)
             {
+                CurrentImportedFile = todos.Item2;
                 TodoListManager.RefreshTodoItems(todos.Item1);
                 GUIServices.MessageService.ShowMessage("Todo Items wurden geladen!");
                 await GUIServices.StorageService.SaveTodosToLastFile(TodoListManager.TodoItems.ToList());
